@@ -30,7 +30,8 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 }));
 app.use(cors());
 
-
+var accountApiRouter = require('./routes/api/account');
+app.use('/api/account', accountApiRouter);
 
 app.all('/api/*', middleware.checkToken);
 
