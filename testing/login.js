@@ -13,7 +13,7 @@ describe('LoginAPI', () => {
 
 
 
-  // to get al details of shop 
+  // to login to app
       it("should be able to register",function(done){
         server
         .post('/login')
