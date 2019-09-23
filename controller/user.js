@@ -62,11 +62,49 @@ function registerHandler(req,res){
   });
 }
 
+function loginHandler(req,res){
+  let username = req.body.username;
+  let password = req.body.password;
+  let pwd=md5(password);
+  console.log(username);
+  console.log(password);
 
+  dbClient('users').where({ username: username})
+.select('password','userId')
+.then(function(result) {
+  if (!result || !result[0])  {
+      return res.status(400).json({
+          message: 'Invalid Username'
+        });
+  }
+  var pass = result[0].password;
+  if (pwd === pass) {
+      let token = jwt.sign({username: username},
+          tokenconfig.secret,
+          { expiresIn: '24h' // expires in 24 hours
+          }
+        );
+        // return the JWT token for the future API calls
+        return res.json({
+          status: 'success',
+          success: 'true',
+          userId: result[0].userId,
+          token: token
+        });
+  } else {
+      return res.status(400).json({
+          message: 'Incorrect username or password'
+        });    }
+})
+.catch(function(error) {
+  console.log(error);
+});   
+}
 
 
 
 
 module.exports = {
     'register':registerHandler,
+    'login' : loginHandler,
  }

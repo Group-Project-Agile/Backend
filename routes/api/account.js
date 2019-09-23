@@ -10,7 +10,8 @@ const user=require('../../controller/user');
 router.post('/register',user.register);
 
 
-
+// for login
+router.post('/login',user.login);
 
 
 module.exports = router;
