@@ -35,7 +35,8 @@ app.use('/api/account', accountApiRouter);
 
 app.all('/api/*', middleware.checkToken);
 
-
+var bidApiRouter = require('./routes/api/bid');
+app.use('/api/bid',bidApiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

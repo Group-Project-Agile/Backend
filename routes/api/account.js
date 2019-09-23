@@ -11,7 +11,7 @@ router.post('/register',user.register);
 
 
 // for login
-router.post('/login',user.login);git 
+router.post('/login',user.login); 
 
 
 module.exports = router;
