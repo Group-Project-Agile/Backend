@@ -14,6 +14,7 @@ router.post('/addbid',bid.addbid);
 router.post('/upload',bid.upload);
 
 
-
+//for all ongoing bids
+router.get('/bids', bid.getbids);
 
 module.exports = router;

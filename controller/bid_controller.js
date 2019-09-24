@@ -83,9 +83,26 @@ function addBidHandler(req,res){
   });
 }
 
+async  function getBids(req,res){
+  dbClient('bids as b')
+  .select(dbClient.raw('bidID,bidImage,userId,bidTitle,startingPrice,bidCount, CASE WHEN bidCount > 0 THEN (select bidAmount from bids_fight WHERE b.bidId=bidId ORDER BY bidAmount DESC LIMIT 1) ELSE startingPrice END AS bidAmount ,maxPrice,marketValue,endingDate,category,bidCount,status'))
+  
+  .where( 'status', '=', 'Ongoing')
+  .then(data =>{
+    res.json(data)
+  })
+  .catch(error => {
+        console.log(error);
+        res.json({
+            status : 'fail',
+            data: null,
+            error: true
+        })
+    })
+}
 
   module.exports = {
     'addbid' : addBidHandler,
     'upload' : uploadHandler,
-   
+    'getbids' : getBids,
  }
