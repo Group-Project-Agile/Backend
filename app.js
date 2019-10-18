@@ -38,6 +38,9 @@ app.all('/api/*', middleware.checkToken);
 var bidApiRouter = require('./routes/api/bid');
 app.use('/api/bid',bidApiRouter);
 
+var bidFightApiRouter = require('./routes/api/bid_fight');
+app.use('/api/bidfight',bidFightApiRouter);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
