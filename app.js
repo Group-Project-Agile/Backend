@@ -12,6 +12,82 @@ var middleware = require('./middleware');
 
 var app = express();
 
+var datetime = new Date();
+var date = new Date(datetime);
+  var currentdate = date.getFullYear() +'-'+(date.getMonth() + 1)+'-' + date.getDate();
+
+  
+  // console.log(previousdate <  currentdate);
+// dbClient('bids')
+// .where( 'endingDate', '<', currentdate)
+// .update({
+//   status: 'sold'
+// })
+// .catch(error => {
+//   console.log(error);
+// })
+
+
+// dbClient('bids')
+// .where( 'bidCount', '=', 0)
+// .update({
+//   status: 'Closed'
+// })
+// .catch(error => {
+//   console.log(error);
+// })
+
+
+//console.log(previousdate <  currentdate);
+dbClient('bids')
+.select('bidCount','bidId')
+  .where('endingDate', '<', currentdate)
+  .then(function(result) {
+    for( var i = 0; i < result.length; i++ )
+    {
+      if(result[i].bidCount != 0){
+        let bidsId = result[i].bidId;
+        dbClient('bids')
+        .where('bidId',bidsId)
+          .update({
+            status: 'Sold'
+          }).then(function(result){
+            dbClient('bids_fight')
+            .select('bidId','bidAmount')
+            .where('bidId', bidsId)
+              .update({
+                status: 'Won'
+              })
+            .orderBy('bidAmount', 'asc')
+            .limit(1)
+            .then(function(data){
+                console.log(bidsId);
+              })
+              .catch(error => {
+                console.log(error);
+              })
+          })
+          .catch(error => {
+            console.log(error);
+          })
+      }else{
+        dbClient('bids')
+        .where('bidId',result[i].bidId)
+          .update({
+            status: 'Closed'
+          })
+          .catch(error => {
+            console.log(error);
+          })
+      }
+    } 
+  }
+
+    
+  )
+  .catch(error => {
+    console.log(error);
+  })
 
 
 
