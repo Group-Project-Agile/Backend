@@ -101,8 +101,26 @@ async  function getBids(req,res){
     })
 }
 
+function getSoldBids(req,res){
+  dbClient({ a: 'bids', b: 'bids_fight',  })
+  .select('a.bidId','a.userId','a.bidImage','a.bidTitle','b.bidAmount','a.maxPrice','a.marketValue','a.endingDate','a.category','a.bidCount','a.status')
+  
+  .where('b.status', "Won")
+  .where('a.status', "Sold")
+  .whereRaw('?? = ??', ['a.bidId', 'b.bidId'])
+
+  .then(data => { //data aauncha
+    res.json(data)
+
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
+
   module.exports = {
     'addbid' : addBidHandler,
     'upload' : uploadHandler,
     'getbids' : getBids,
+    'getsoldbids' : getSoldBids,
  }

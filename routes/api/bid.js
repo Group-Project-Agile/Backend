@@ -17,4 +17,7 @@ router.post('/upload',bid.upload);
 //for all ongoing bids
 router.get('/bids', bid.getbids);
 
+//for all sold bids
+router.get('/soldbids', bid.getsoldbids);
+
 module.exports = router;
