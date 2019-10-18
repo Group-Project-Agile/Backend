@@ -118,9 +118,25 @@ function getSoldBids(req,res){
   });
 }
 
+function getBid(req, res) {
+  let userId = req.params.id;
+    console.log(userId);
+    dbClient('bids')
+      .select('bidId','userId','bidImage','bidTitle','startingPrice','maxPrice','marketValue','endingDate','category','bidCount','status')
+      .where({ userId: userId,status:"Ongoing"})
+  
+      .then(data => { //data aauncha
+        res.json(data)
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   module.exports = {
     'addbid' : addBidHandler,
     'upload' : uploadHandler,
     'getbids' : getBids,
     'getsoldbids' : getSoldBids,
+    'getbid':getBid,
  }

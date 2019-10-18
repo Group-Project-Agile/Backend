@@ -20,4 +20,7 @@ router.get('/bids', bid.getbids);
 //for all sold bids
 router.get('/soldbids', bid.getsoldbids);
 
+//for user ongoin bid
+router.get('/:id/bid',bid.getbid);
+
 module.exports = router;
