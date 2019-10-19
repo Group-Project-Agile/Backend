@@ -23,4 +23,8 @@ router.get('/soldbids', bid.getsoldbids);
 //for user ongoin bid
 router.get('/:id/bid',bid.getbid);
 
+//for user SoldOut bid
+router.get('/:id/soldbid',bid.getsoldbid);
+
+
 module.exports = router;
