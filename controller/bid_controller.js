@@ -152,7 +152,26 @@ function getBid(req, res) {
       console.log(error);
     });
     }
+    function getWinBid(req, res){
+      let user_id = req.params.id;
+dbClient({ a: 'bids', b: 'bids_fight',  })
+.select('a.bidImage','a.bidTitle','b.bidAmount')
+.where('b.status', "won")
+.where('b.bidderId', user_id)
+.whereRaw('?? = ??', ['a.bidId', 'b.bidId'])
 
+.then(data => { //data aauncha
+res.json(data)
+
+})
+.catch(function (error) {
+console.log(error);
+});
+
+
+    }
+
+    
   module.exports = {
     'addbid' : addBidHandler,
     'upload' : uploadHandler,
@@ -160,4 +179,5 @@ function getBid(req, res) {
     'getsoldbids' : getSoldBids,
     'getbid':getBid,
      'getsoldbid':getSoldBid,
+     'getwinbid':getWinBid,
  }
