@@ -41,4 +41,6 @@ router.get('/pedalbids', bid.getpedalbids);
 //for all ongoing Other bids
 router.get('/otherbids', bid.getotherbids);
 
+
+
 module.exports = router;
