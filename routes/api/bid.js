@@ -29,5 +29,16 @@ router.get('/:id/soldbid',bid.getsoldbid);
 //for user Win bid
 router.get('/:id/winbid',bid.getwinbid);
 
+//for all ongoing Guitar bids
+router.get('/guitarbids', bid.getguitarbids);
+
+//for all ongoing Mike bids
+router.get('/mikebids', bid.getmikebids);
+
+//for all ongoing Pedal bids
+router.get('/pedalbids', bid.getpedalbids);
+
+//for all ongoing Other bids
+router.get('/otherbids', bid.getotherbids);
 
 module.exports = router;

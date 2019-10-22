@@ -171,6 +171,81 @@ console.log(error);
 
     }
 
+    async  function getGuitarBids(req,res){
+      dbClient('bids as b')
+      .select(dbClient.raw('bidID,bidImage,userId,bidTitle,startingPrice,bidCount, CASE WHEN bidCount > 0 THEN (select bidAmount from bids_fight WHERE b.bidId=bidId ORDER BY bidAmount DESC LIMIT 1) ELSE startingPrice END AS bidAmount ,maxPrice,marketValue,endingDate,category,bidCount,status' ))
+      
+      .where( 'status', '=', 'Ongoing')
+      .where('category', "Guitar")
+      .then(data =>{
+        res.json(data)
+      })
+      .catch(error => {
+            console.log(error);
+            res.json({
+                status : 'fail',
+                data: null,
+                error: true
+            })
+        })
+      }
+    
+      async  function getMikeBids(req,res){
+        dbClient('bids as b')
+        .select(dbClient.raw('bidID,bidImage,userId,bidTitle,startingPrice,bidCount, CASE WHEN bidCount > 0 THEN (select bidAmount from bids_fight WHERE b.bidId=bidId ORDER BY bidAmount DESC LIMIT 1) ELSE startingPrice END AS bidAmount ,maxPrice,marketValue,endingDate,category,bidCount,status' ))
+        
+        .where( 'status', '=', 'Ongoing')
+        .where('category', "Mike")
+        .then(data =>{
+          res.json(data)
+        })
+        .catch(error => {
+              console.log(error);
+              res.json({
+                  status : 'fail',
+                  data: null,
+                  error: true
+              })
+          })
+        }
+    
+        async  function getPedalBids(req,res){
+          dbClient('bids as b')
+          .select(dbClient.raw('bidID,bidImage,userId,bidTitle,startingPrice,bidCount, CASE WHEN bidCount > 0 THEN (select bidAmount from bids_fight WHERE b.bidId=bidId ORDER BY bidAmount DESC LIMIT 1) ELSE startingPrice END AS bidAmount ,maxPrice,marketValue,endingDate,category,bidCount,status' ))
+          
+          .where( 'status', '=', 'Ongoing')
+          .where('category', "Pedal")
+          .then(data =>{
+            res.json(data)
+          })
+          .catch(error => {
+                console.log(error);
+                res.json({
+                    status : 'fail',
+                    data: null,
+                    error: true
+                })
+            })
+          }
+    
+          async  function getOtherBids(req,res){
+            dbClient('bids as b')
+            .select(dbClient.raw('bidID,bidImage,userId,bidTitle,startingPrice,bidCount, CASE WHEN bidCount > 0 THEN (select bidAmount from bids_fight WHERE b.bidId=bidId ORDER BY bidAmount DESC LIMIT 1) ELSE startingPrice END AS bidAmount ,maxPrice,marketValue,endingDate,category,bidCount,status' ))
+            
+            .where( 'status', '=', 'Ongoing')
+            .where('category', "Other")
+            .then(data =>{
+              res.json(data)
+            })
+            .catch(error => {
+                  console.log(error);
+                  res.json({
+                      status : 'fail',
+                      data: null,
+                      error: true
+                  })
+              })
+            }
     
   module.exports = {
     'addbid' : addBidHandler,
@@ -180,4 +255,8 @@ console.log(error);
     'getbid':getBid,
      'getsoldbid':getSoldBid,
      'getwinbid':getWinBid,
+     'getguitarbids' : getGuitarBids,
+    'getmikebids' : getMikeBids,
+    'getpedalbids' : getPedalBids,
+    'getotherbids' : getOtherBids,
  }
