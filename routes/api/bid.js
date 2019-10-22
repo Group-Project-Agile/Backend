@@ -41,6 +41,10 @@ router.get('/pedalbids', bid.getpedalbids);
 //for all ongoing Other bids
 router.get('/otherbids', bid.getotherbids);
 
+//for all closed bids
+router.get('/:id/closedbids', bid.getclosedbids);
 
+//for update user Ending date Closing bid
+router.put('/:id/updateendingdate',bid.updateendingdate)
 
 module.exports = router;

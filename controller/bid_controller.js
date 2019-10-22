@@ -246,6 +246,49 @@ console.log(error);
                   })
               })
             }
+
+            function getClosedBids(req,res){
+
+              let user_id = req.params.id;
+               dbClient('bids')
+               .select('bidId','userId','bidImage','bidTitle','startingPrice','maxPrice','marketValue','endingDate','category','bidCount','status')
+               .where('status', "Closed")
+                  .where('userId', user_id)
+              
+                  .then(data => { //data aauncha
+                    res.json(data)
+            
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
+                }
+
+                function updateEndingDate(req,res){
+                  let bidId = req.params.id;
+                    let endingDate = req.body.endingDate;
+    
+                       dbClient('bids')
+                        .where({ bidId: bidId})
+                         .update({
+                           endingDate:endingDate,
+                           status:"Ongoing"
+                         })
+                        .then(data => {
+                          res.json({
+                            success: 'true',
+                            status: 'success',
+                            data: {
+                           endingDate :endingDate
+                        }
+                          })
+                        })
+                        .catch(error => {
+                          console.log(error);
+                        })
+                
+                }
+    
     
   module.exports = {
     'addbid' : addBidHandler,
@@ -259,4 +302,6 @@ console.log(error);
     'getmikebids' : getMikeBids,
     'getpedalbids' : getPedalBids,
     'getotherbids' : getOtherBids,
+    'getclosedbids' : getClosedBids,
+    'updateendingdate':updateEndingDate,
  }
