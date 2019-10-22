@@ -289,6 +289,22 @@ console.log(error);
                 
                 }
     
+                function searchBid(req,res){
+                  let search = req.params.search;
+                  console.log(search);
+    
+                       dbClient('bids')
+                       .select('*')
+                        .where('bidTitle','like','%'+search+'%')
+                        
+                        .then(data => {
+                          res.json(data)
+                        })
+                        .catch(error => {
+                          console.log(error);
+                        })
+                
+                }
     
   module.exports = {
     'addbid' : addBidHandler,
@@ -304,4 +320,5 @@ console.log(error);
     'getotherbids' : getOtherBids,
     'getclosedbids' : getClosedBids,
     'updateendingdate':updateEndingDate,
+    'searchBid':searchBid
  }
